@@ -1,4 +1,5 @@
 from typing import List, Union, Tuple, Generator
+# We can use parse library for next parse data from the file
 
 
 def read_file(filename: str) -> List[str]:
@@ -21,8 +22,7 @@ def split_data(data: List[str]) -> Tuple[Generator[int, None, None], str, str]:
 def first_policy(data: List[str]) -> bool:
     numbers, letter, password = split_data(data)
 
-    times = len(password.split(letter)) - 1
-    if next(numbers) <= times <= next(numbers):
+    if next(numbers) <= password.count(letter) <= next(numbers):
         return True
 
     return False
@@ -38,7 +38,7 @@ def second_policy(data: List[str]) -> bool:
     first_position = password[next(numbers) - 1]
     second_position = password[next(numbers) - 1]
 
-    if (first_position == letter or second_position == letter) and first_position != second_position:
+    if (first_position == letter) ^ (second_position == letter):
         return True
 
     return False
