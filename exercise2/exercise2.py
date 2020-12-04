@@ -22,10 +22,7 @@ def split_data(data: List[str]) -> Tuple[Generator[int, None, None], str, str]:
 def first_policy(data: List[str]) -> bool:
     numbers, letter, password = split_data(data)
 
-    if next(numbers) <= password.count(letter) <= next(numbers):
-        return True
-
-    return False
+    return next(numbers) <= password.count(letter) <= next(numbers)
 
 
 def first_exercise(data: List[List[Union[int, str]]]) -> int:
@@ -38,10 +35,7 @@ def second_policy(data: List[str]) -> bool:
     first_position = password[next(numbers) - 1]
     second_position = password[next(numbers) - 1]
 
-    if (first_position == letter) ^ (second_position == letter):
-        return True
-
-    return False
+    return (first_position == letter) ^ (second_position == letter)
 
 
 def second_exercise(data: List[List[Union[int, str]]]):
