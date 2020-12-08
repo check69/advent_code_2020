@@ -25,6 +25,13 @@ def acc(argument: int, current_instruction: int, accumulator: int) -> Tuple[int,
     return current_instruction + 1, accumulator + argument
 
 
+operations = {
+    "nop": nop,
+    "jmp": jmp,
+    "acc": acc
+}
+
+
 def run_program(instructions: List[Tuple[str, int]], operations: Dict[str, Callable]) -> Tuple[int, int]:
     accumulator = 0
     instruction_already_executed = []
@@ -66,20 +73,10 @@ def brute_force_to_find_the_error(instructions: List[Tuple[str, int]], operation
 
 
 def first_exercise(data: List[Tuple[str, int]]) -> int:
-    operations = {
-        "nop": nop,
-        "jmp": jmp,
-        "acc": acc
-    }
     return run_program(data, operations)[0]
 
 
 def second_exercise(data: List[str]) -> int:
-    operations = {
-        "nop": nop,
-        "jmp": jmp,
-        "acc": acc
-    }
     return brute_force_to_find_the_error(data, operations)
 
 
