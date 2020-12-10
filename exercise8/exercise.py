@@ -14,7 +14,7 @@ def read_file(filename: str) -> List[str]:
 
 
 def nop(argument: int, current_instruction: int, accumulator: int) -> Tuple[int, int]:
-    return current_instruction + 1, accumulator
+    return jmp(1, current_instruction, accumulator)
 
 
 def jmp(argument: int, current_instruction: int, accumulator: int) -> Tuple[int, int]:
