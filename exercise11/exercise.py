@@ -8,12 +8,16 @@ def read_file(filename: str) -> List[str]:
         return [line.strip("\n") for line in file]
 
 
+def get_directions() -> Generator[Tuple[int, int], None, None]:
+    return itertools.product((1, 0, -1), (1, 0, -1))
+
+
 def get_adjacent_positions_base(row: int, column: int,
                                 seats: List[str]) -> Generator[Tuple[int, int], None, None]:
     length_row = len(seats)
     length_column = len(seats[row])
     return (
-        (r, c) for x, y in itertools.product((1, 0, -1), (1, 0, -1)) if (
+        (r, c) for x, y in get_directions() if (
             (0 <= (r := row + x) < length_row) and
             (0 <= (c := column + y) < length_column) and
             (r, c) != (row, column))
@@ -25,45 +29,16 @@ def get_adjacent_positions_advance(x: int, y: int, seats: List[str]) -> List[Tup
     length_rows = len(seats[x])
     checkers = []
 
-    for r in range(x - 1, -1, -1):
-        if seats[r][y] != ".":
-            checkers.append((r, y))
-            break
-
-    for r in range(x + 1, length_plane):
-        if seats[r][y] != ".":
-            checkers.append((r, y))
-            break
-
-    for c in range(y - 1, -1, -1):
-        if seats[x][c] != ".":
-            checkers.append((x, c))
-            break
-
-    for c in range(y + 1, length_rows):
-        if seats[x][c] != ".":
-            checkers.append((x, c))
-            break
-
-    for r, c in zip(range(x + 1, length_plane), range(y + 1, length_rows)):
-        if seats[r][c] != ".":
-            checkers.append((r, c))
-            break
-
-    for r, c in zip(range(x - 1, -1, -1), range(y + 1, length_rows)):
-        if seats[r][c] != ".":
-            checkers.append((r, c))
-            break
-
-    for r, c in zip(range(x - 1, -1, -1), range(y - 1, -1, -1)):
-        if seats[r][c] != ".":
-            checkers.append((r, c))
-            break
-
-    for r, c in zip(range(x + 1, length_plane), range(y - 1, -1, -1)):
-        if seats[r][c] != ".":
-            checkers.append((r, c))
-            break
+    for dir_x, dir_y in get_directions():
+        pos_x = x
+        pos_y = y
+        if dir_x != 0 or dir_y != 0:
+            while 0 <= pos_x + dir_x < length_plane and 0 <= pos_y + dir_y < length_rows:
+                pos_x += dir_x
+                pos_y += dir_y
+                if seats[pos_x][pos_y] != ".":
+                    checkers.append((pos_x, pos_y))
+                    break
 
     return checkers
 
@@ -111,7 +86,7 @@ def compare_seats(old_seats: List[str], new_seats: List[str]) -> bool:
 def count_occupied_seats(seats: List[str], calc_adjacent_places: Callable, tolerant_value: int) -> int:
     old_seats = deepcopy(seats)
     while True:
-        new_seats_distribution = organizing_people_in_seats_system(seats, calc_adjacent_places, tolerant_value)
+        new_seats_distribution = organizing_people_in_seats_system(old_seats, calc_adjacent_places, tolerant_value)
         if compare_seats(old_seats, new_seats_distribution) is False:
             return sum(row.count("#") for row in old_seats)
 
