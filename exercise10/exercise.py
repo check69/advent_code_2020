@@ -33,7 +33,7 @@ def jolt_difference(jolts: List[int]) -> Tuple[int, int]:
     return math.prod(jolts_count)
 
 
-def get_subgroups_count(jolts_distance: List[int]) -> List[int]:
+def get_subgroups_count(jolts_distance: List[int]) -> List[Tuple[int, int]]:
     groups = itertools.groupby(jolts_distance)
     return ((a, len(list(b))) for a, b in groups)
 
@@ -50,7 +50,7 @@ def possible_combinations(number: int) -> int:
     return combination_result.get(number, 1)
 
 
-def calc_combinations(subgroups) -> int:
+def calc_combinations(subgroups: List[Tuple[int, int]]) -> int:
     filtered_subgroups = filter(lambda x: x[0] == 1, subgroups)
 
     def steps_to_calc_combinations(accumulator: int, max_combinations: Tuple[int, int]) -> int:
