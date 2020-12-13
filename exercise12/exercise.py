@@ -30,7 +30,7 @@ DIRECTIONS = {"N": 0, "E": 1, "S": 2, "W": 3}
 
 def first_exercise(data: FileData) -> int:
     movement = [0, 0, 0, 0]
-    direction = 1
+    direction = DIRECTIONS["E"]
     for command, value in data:
         if command in "LR":
             direction = get_direction(command, value, direction)
