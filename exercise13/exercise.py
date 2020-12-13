@@ -1,5 +1,4 @@
 import math
-import numpy
 from typing import List, Tuple, Generator, Dict
 
 FileData = Tuple[int, List[str]]
