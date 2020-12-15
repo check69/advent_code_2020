@@ -1,9 +1,9 @@
 from typing import List, Dict
 
-FileData = List[int]
+DataType = List[int]
 
 
-def initial_dictionary(data: FileData) -> Dict[int, int]:
+def initial_dictionary(data: DataType) -> Dict[int, int]:
     return {
         number: position
         for position, number in enumerate(data, 1)
@@ -21,7 +21,7 @@ def get_new_number(iteration: int, previous_number: int, numbers_position: Dict[
     return new_number
 
 
-def solve(data: FileData, iterations: int) -> int:
+def solve(data: DataType, iterations: int) -> int:
     numbers_position = initial_dictionary(data[:-1])
 
     previous_number = data[-1]
@@ -32,11 +32,11 @@ def solve(data: FileData, iterations: int) -> int:
     return previous_number
 
 
-def first_exercise(data: FileData) -> int:
+def first_exercise(data: DataType) -> int:
     return solve(data, 2020)
 
 
-def second_exercise(data: FileData) -> int:
+def second_exercise(data: DataType) -> int:
     return solve(data, 30000000)
 
 
