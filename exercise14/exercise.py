@@ -1,31 +1,31 @@
 import itertools
 from typing import List, Dict, Tuple
 
-import parse
+from parse import parse
 
 FileData = Dict[str, Tuple[int, str]]
 
+mem_str = "mem[{address:d}] = {value:d}"
+mask_str = "mask = {mask}"
+
 
 def parse_mask(line: str) -> str:
-    return line.strip("\n")[7:]
+    return parse(mask_str, line)
 
 
-def parse_mem(line: str) -> Tuple[int, str]:
-    fmt_str = "mem[{address:d}] = {value:d}"
-    matches = parse.parse(fmt_str, line)
-    return matches["address"], matches["value"]
+def parse_mem(line: str) -> Tuple[int, int]:
+    return parse(mem_str, line)
 
 
 def parse_file(file: List[str]) -> FileData:
     data = {}
     current_mask = 0
     for line in file:
-        if line.startswith("mask"):
-            current_mask = parse_mask(line)
+        if mask := parse_mask(line):
+            current_mask = mask
             data[current_mask] = []
-        else:
-            address, value = parse_mem(line)
-            data[current_mask].append((address, value))
+        elif memory := parse_mem(line):
+            data[current_mask].append((memory["address"], memory["value"]))
 
     return data
 
