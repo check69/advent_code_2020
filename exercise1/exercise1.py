@@ -2,13 +2,9 @@ import itertools
 from typing import List, Generator
 
 
-def read_file(filename: str) -> List[str]:
-    with open(filename, "r") as f:
-        return f.readlines()
-
-
-def get_data(filename: str) -> List[int]:
-    return [int(i) for i in read_file(filename)]
+def read_file(filename: str) -> List[int]:
+    with open(filename, "r") as file:
+        return [int(line) for line in file]
 
 
 def first_exercise(data: List[int]) -> Generator[int, None, None]:
@@ -20,7 +16,7 @@ def second_exercise(data: List[int]) -> Generator[int, None, None]:
 
 
 def main():
-    data : List[int] = get_data("data1")
+    data: List[int] = read_file("data1")
     print("The result of the first exercise is: ", next(first_exercise(data)))
     print("The result of the second exercise is: ", next(second_exercise(data)))
 
