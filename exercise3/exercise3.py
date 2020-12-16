@@ -4,12 +4,8 @@ from typing import List
 
 
 def read_file(filename: str) -> List[str]:
-    with open(filename, "r") as f:
-        return f.readlines()
-
-
-def strip_newlines(data: List[str]) -> List[str]:
-    return [line.strip() for line in data]
+    with open(filename, "r") as file:
+        return [line.strip() for line in file]
 
 
 def getting_trees(slope: List[str], move_right: int, move_down: int) -> int:
@@ -38,7 +34,7 @@ def second_exercise(data: List[str]) -> int:
 
 
 def main():
-    data = strip_newlines(read_file("data"))
+    data = read_file("data")
     print("The result of the first exercise is: ", first_exercise(data))
     print("The result of the second exercise is: ", second_exercise(data))
 
