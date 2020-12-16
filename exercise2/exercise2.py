@@ -2,13 +2,9 @@ from typing import List, Union, Tuple, Generator
 # We can use parse library for next parse data from the file
 
 
-def read_file(filename: str) -> List[str]:
-    with open(filename, "r") as f:
-        return f.readlines()
-
-
-def get_password_elements(data: List[str]) -> List[List[Union[int, str]]]:
-    return [elements.split() for elements in data]
+def read_file(filename: str) -> List[List[Union[int, str]]]:
+    with open(filename, "r") as file:
+        return [line.split() for line in file]
 
 
 def split_data(data: List[str]) -> Tuple[Generator[int, None, None], str, str]:
@@ -43,7 +39,7 @@ def second_exercise(data: List[List[Union[int, str]]]):
 
 
 def main():
-    data = get_password_elements(read_file("data"))
+    data = read_file("data")
     print("The result of the first exercise is: ", first_exercise(data))
     print("The result of the second exercise is: ", second_exercise(data))
 
